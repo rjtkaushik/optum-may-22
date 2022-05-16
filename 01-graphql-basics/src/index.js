@@ -7,10 +7,10 @@ const users = [
 ]
 
 const posts = [
-    { id: "201", title : "GraphQL 101", body : "Good post", published : false, author: "101"},
-    { id: "202", title : "GraphQL for Beginners", body : "Nice post", published : true,  author: "101"},
-    { id: "203", title : "GraphQL Mastering", body : "I Like it", published : false,  author: "102"},
-    { id: "204", title : "GraphQL for All", body : "Awesome Course", published : true,  author: "103"},
+    { id: "201", title : "GraphQL 101", body : "Good post", published : false, authorId: "101"},
+    { id: "202", title : "GraphQL for Beginners", body : "Nice post", published : true,  authorId: "101"},
+    { id: "203", title : "GraphQL Mastering", body : "I Like it", published : false,  authorId: "102"},
+    { id: "204", title : "GraphQL for All", body : "Awesome Course", published : true,  authorId: "103"},
 ]
 
 // Structure
@@ -32,6 +32,7 @@ const typeDefs = gql`
         name: String!
         email: String!
         age: Int
+        posts: [Post!]!
     }
 `
 
@@ -67,8 +68,13 @@ const resolvers = {
     },
     Post : {
         author(parent, args, ctx, info){
-           const userFound =  users.find(user => user.id === parent.author)
+           const userFound =  users.find(user => user.id === parent.authorId)
            return userFound;
+        }
+    },
+    User :{
+        posts(parent, args, ctx, info){
+            return posts.filter(post => post.authorId === parent.id)
         }
     }
 }
