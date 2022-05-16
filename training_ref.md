@@ -39,3 +39,20 @@ employee {
         rank
     }
 }
+
+
+# GraphQL Basics
+- apollo-server
+- graphql
+
+
+# Scalar Types - holds only one Value
+- String
+- Boolean
+- Int
+- Float
+- ID ->
+
+
+# to install nodemon
+- npm i nodemon -g

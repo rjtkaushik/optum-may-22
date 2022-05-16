@@ -3,8 +3,9 @@ const { ApolloServer, gql } = require("apollo-server");
 // Structure
 const typeDefs = gql`
     type Query {
-        hello: String!
+        hello: String
         me: String! 
+        age: Int!
     }
 `
 
@@ -12,10 +13,13 @@ const typeDefs = gql`
 const resolvers = {
     Query : {
         hello () {
-            return "World"
+            return null
         },
         me(){
             return "I'm Sumit K"
+        },
+        age(){
+            return 36
         }
     }
 }
