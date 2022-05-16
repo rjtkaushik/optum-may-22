@@ -56,3 +56,6 @@ employee {
 
 # to install nodemon
 - npm i nodemon -g
+
+# to run the project
+- npm run start

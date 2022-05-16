@@ -1,25 +1,40 @@
 const { ApolloServer, gql } = require("apollo-server");
 
+const users = [
+    {id: "101", name : "john", email:"john@test", age: 32},
+    {id: "102", name : "james", email:"james@test", age: 34},
+    {id: "103", name : "jenny", email:"jenny@test", age: 35},
+]
+
 // Structure
 const typeDefs = gql`
     type Query {
-        hello: String
-        me: String! 
-        age: Int!
+        me: User! 
+        users(query: String): [User!]!
+    }
+    type User {
+        id:ID!
+        name: String!
+        email: String!
+        age: Int
     }
 `
 
 // Behaviour
 const resolvers = {
     Query : {
-        hello () {
-            return null
+        users(parent, args, ctx, info){
+            if(args.query){
+                return users.filter(user => user.name.toLowerCase().includes(args.query.toLowerCase()))
+            }
+            return users;
         },
         me(){
-            return "I'm Sumit K"
-        },
-        age(){
-            return 36
+            return {
+                id : "1",
+                name : "Alice Doe",
+                email: "alice@test.com"
+            }
         }
     }
 }
