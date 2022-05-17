@@ -178,3 +178,35 @@ mutation {
   }
 }
 
+- DeleteUser
+mutation{
+  deleteUser(userId : "103"){
+    id
+    name
+  }
+}
+
+- DeletePost
+mutation{
+  deletePost(postId : "201"){
+    id
+    title
+  }
+}
+
+- DeleteComment
+mutation {
+  deleteComment(id: "301"){
+    id
+    text
+  }
+}
+
+- UpdateUser
+mutation{
+  updateUser(userId : "103", data : {
+     email : "new@test.com"
+     }){
+    id name email age
+  }
+}
