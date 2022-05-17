@@ -31,6 +31,16 @@ module.exports = {
             throw new Error("User not found.")
         }
     },
+    deletePost(parent, args, {db}, info){
+        const position = db.posts.findIndex(post => post.id === args.postId)
+        if(position >= 0){
+            db.comments = db.comments.filter(comment => comment.postId !== args.postId)
+            const [deletedPost] = db.posts.splice(position, 1)
+            return deletedPost;
+        }else{
+            throw new Error("Post not found")
+        }
+    },
     createComment(parent, args, {db}, info){
         const {text, authorId, postId} = args.data;
         const isUserMatch = db.users.some(user => user.id === authorId)
@@ -46,6 +56,15 @@ module.exports = {
             return newComment;
         }else{
             throw new Error("Either post/user not found")
+        }
+    },
+    deleteComment(parent, args, {db}, info){
+        const position = db.comments.findIndex(comment => comment.id === args.id)
+        if(position >= 0){
+            const [deletedComment] = db.comments.splice(position, 1)
+            return deletedComment;
+        }else{
+            throw new Error("Comment not found")
         }
     }
 }
