@@ -89,7 +89,7 @@ module.exports = {
             const [deletedPost] = db.posts.splice(position, 1)
             pubsub.publish("POST", {
                 post : {
-                    mutationType : "DELETE",
+                    mutationType : "DELETED",
                     data: deletedPost
                 }
             })

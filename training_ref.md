@@ -216,5 +216,7 @@ mutation{
 
 
 # Subscription
+> npm install
 > npm install graphql-ws ws @graphql-tools/schema apollo-server-core
 > npm install express apollo-server-express
+> npm install graphql-subscriptions
