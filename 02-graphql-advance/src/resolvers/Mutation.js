@@ -60,7 +60,7 @@ module.exports = {
             throw new Error("Unable to update")
         }
     },
-    createPost(parent, args, { db }, info) {
+    createPost(parent, args, { db, pubsub }, info) {
         const userFound = db.users.some(user => user.id === args.data.authorId)
         if (userFound) {
             let newPost = {
@@ -71,16 +71,28 @@ module.exports = {
                 authorId: args.data.authorId
             }
             db.posts.push(newPost)
+            pubsub.publish("POST", {
+                post: {
+                    mutationType : "CREATED",
+                    data : newPost
+                }
+            })
             return newPost;
         } else {
             throw new Error("User not found.")
         }
     },
-    deletePost(parent, args, { db }, info) {
+    deletePost(parent, args, { db, pubsub }, info) {
         const position = db.posts.findIndex(post => post.id === args.postId)
         if (position >= 0) {
             db.comments = db.comments.filter(comment => comment.postId !== args.postId)
             const [deletedPost] = db.posts.splice(position, 1)
+            pubsub.publish("POST", {
+                post : {
+                    mutationType : "DELETE",
+                    data: deletedPost
+                }
+            })
             return deletedPost;
         } else {
             throw new Error("Post not found")

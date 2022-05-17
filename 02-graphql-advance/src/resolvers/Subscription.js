@@ -10,5 +10,10 @@ module.exports = {
             }, 1000)
             return pubsub.asyncIterator("COUNTER")
         }
+    },
+    post : {
+        subscribe(parent, args, {pubsub}, info){
+            return pubsub.asyncIterator("POST")
+        }
     }
 }
