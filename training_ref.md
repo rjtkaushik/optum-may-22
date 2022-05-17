@@ -236,6 +236,7 @@ query {
 > POST - /api/employees
 
 
+> npm i mongoose -> ODM form MongoDB
 
 # Mongoose - connect(URL)
 MongoDB Connection /db/index.js
