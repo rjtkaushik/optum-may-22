@@ -6,6 +6,8 @@ const { ApolloServer } = require("apollo-server-express");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { PubSub } = require("graphql-subscriptions");
 
+require("./db")
+
 const typeDefs = require("./schema");
 const resolvers = require("./resolvers/index");
 

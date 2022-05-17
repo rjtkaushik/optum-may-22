@@ -234,3 +234,15 @@ query {
 > GET - /api/employees
 > GET - /api/employees/:id
 > POST - /api/employees
+
+
+
+# Mongoose - connect(URL)
+MongoDB Connection /db/index.js
+
+# Model/Schema
+UserModel -> userSchema /model/user.model.js
+
+# CreateUser Mutation
+/graphql - CreateUser(name, email, password)
+UserModel.save(name, email, password)

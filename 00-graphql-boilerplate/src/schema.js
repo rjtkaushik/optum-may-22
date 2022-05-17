@@ -4,11 +4,4 @@ module.exports = gql`
 type Query {
    hello: String!
 }
-type Mutation {
-   
-}
-type Subscription {
-   
-}
-
 `
