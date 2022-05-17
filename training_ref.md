@@ -65,6 +65,8 @@ employee {
 - Queries : to fetch the data
 - Mutations : to create create, update and delete
 - Subscriptions : to get the realtime updates
+    : WebSocket : bi-directional full duplex Communication
+    : PubSub : Publish/Subscribe
 
 # Mutation (User Post Comment)
 - Create
@@ -210,3 +212,9 @@ mutation{
     id name email age
   }
 }
+
+
+
+# Subscription
+> npm install graphql-ws ws @graphql-tools/schema apollo-server-core
+> npm install express apollo-server-express
