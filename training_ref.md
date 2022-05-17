@@ -247,3 +247,47 @@ UserModel -> userSchema /model/user.model.js
 # CreateUser Mutation
 /graphql - CreateUser(name, email, password)
 UserModel.save(name, email, password)
+
+- CREATE
+mutation {
+  createUser(data : {
+    name : "john",
+    email : "john@test",
+    password: "jon123"
+  }){
+    _id 
+    name
+    email
+    password
+  }
+}
+
+- READ
+query{
+  users {
+    _id
+    name
+    email
+    password
+    age
+  }
+}
+
+- UPDATE
+mutation($updateUserId: ID!){
+  updateUser(id: $updateUserId, data : {
+    age : 32,
+    name : "Alice Doe"
+  }) {
+    _id
+    name
+    age
+  }
+}
+
+- DELETE
+mutation($deleteUserId: ID!) {
+  deleteUser(id: $deleteUserId) {
+    _id name 
+  }
+}
