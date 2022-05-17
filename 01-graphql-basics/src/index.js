@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
+const { v4 } = require("uuid");
 
 const users = [
     { id: "101", name: "john", email: "john@test", age: 32 },
@@ -28,6 +29,16 @@ const typeDefs = gql`
         posts(search:String): [Post!]!
         comments: [Comment!]!
     }
+    type Mutation {
+        createUser(name: String!, email: String!) : User!
+        createPost(data: CreatePostInput): Post!
+    }
+    input CreatePostInput{
+        title: String!
+        body: String!
+        published: Boolean
+        authorId: ID!
+    }
     type Comment {
         id: ID!
         text: String!
@@ -54,6 +65,38 @@ const typeDefs = gql`
 
 // Behaviour
 const resolvers = {
+    Mutation: {
+        createUser(parent, args, ctx, info){
+            const isEmailFound = users.some(user => user.email === args.email)
+            if(isEmailFound){
+                throw new Error("Email already taken")
+            }else{
+                let newUser = {
+                    id: v4(),
+                    name : args.name,
+                    email : args.email
+                }
+                users.push(newUser)
+                return newUser;
+            }
+        },
+        createPost(parent, args, ctx, info){
+            const userFound = users.some(user => user.id === args.data.authorId)
+            if(userFound){
+                let newPost = {
+                    id: v4(),
+                    title : args.data.title,
+                    body : args.data.body,
+                    published: args.data.published ? args.data.published : false,
+                    authorId: args.data.authorId
+                }
+                posts.push(newPost)
+                return newPost;
+            }else{
+                throw new Error("User not found.")
+            }
+        }
+    },
     Query: {
         posts(parent, args, ctx, info) {
             if (args.search) {
