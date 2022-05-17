@@ -9,6 +9,7 @@ type Query {
 }
 type Mutation {
     createUser(name: String!, email: String!) : User!
+    deleteUser(userId: ID! ) : User!
     createPost(data: CreatePostInput): Post!
     deletePost(postId: ID!) : Post!
     createComment(data: CreateCommentInput ): Comment!

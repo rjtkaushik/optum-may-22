@@ -15,6 +15,23 @@ module.exports = {
             return newUser;
         }
     },
+    deleteUser(parent, args, {db}, info){
+       const position = db.users.findIndex(user => user.id === args.userId)
+       if(position >= 0){
+            db.comments = db.comments.filter(comment => comment.commentedBy !== args.userId)
+            db.posts = db.posts.filter(post => {
+                const isMatch = post.authorId === args.userId
+                if(isMatch){
+                    db.comments = db.comments.filter(comment => comment.postId !== post.id)
+                }
+                return !isMatch
+            })
+            const [deletedUser] = db.users.splice(position, 1)
+            return deletedUser;
+       }else{
+           throw new Error("User not found")
+       }
+    },
     createPost(parent, args, {db}, info) {
         const userFound = db.users.some(user => user.id === args.data.authorId)
         if (userFound) {
