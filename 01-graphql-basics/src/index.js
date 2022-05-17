@@ -32,6 +32,12 @@ const typeDefs = gql`
     type Mutation {
         createUser(name: String!, email: String!) : User!
         createPost(data: CreatePostInput): Post!
+        createComment(data: CreateCommentInput ): Comment!
+    }
+    input CreateCommentInput{
+        text: String!
+        authorId: ID!
+        postId: ID!
     }
     input CreatePostInput{
         title: String!
@@ -66,34 +72,51 @@ const typeDefs = gql`
 // Behaviour
 const resolvers = {
     Mutation: {
-        createUser(parent, args, ctx, info){
+        createUser(parent, args, ctx, info) {
             const isEmailFound = users.some(user => user.email === args.email)
-            if(isEmailFound){
+            if (isEmailFound) {
                 throw new Error("Email already taken")
-            }else{
+            } else {
                 let newUser = {
                     id: v4(),
-                    name : args.name,
-                    email : args.email
+                    name: args.name,
+                    email: args.email
                 }
                 users.push(newUser)
                 return newUser;
             }
         },
-        createPost(parent, args, ctx, info){
+        createPost(parent, args, ctx, info) {
             const userFound = users.some(user => user.id === args.data.authorId)
-            if(userFound){
+            if (userFound) {
                 let newPost = {
                     id: v4(),
-                    title : args.data.title,
-                    body : args.data.body,
+                    title: args.data.title,
+                    body: args.data.body,
                     published: args.data.published ? args.data.published : false,
                     authorId: args.data.authorId
                 }
                 posts.push(newPost)
                 return newPost;
-            }else{
+            } else {
                 throw new Error("User not found.")
+            }
+        },
+        createComment(parent, args, ctx, info){
+            const {text, authorId, postId} = args.data;
+            const isUserMatch = users.some(user => user.id === authorId)
+            const isPostMatch = posts.some(post => post.id === postId && post.published)
+            if(isUserMatch && isPostMatch){
+                let newComment = {
+                    id: v4(),
+                    text,
+                    commentedBy : authorId,
+                    postId
+                }
+                comments.push(newComment);
+                return newComment;
+            }else{
+                throw new Error("Either post/user not found")
             }
         }
     },
@@ -132,7 +155,7 @@ const resolvers = {
         creator(parent, args, ctx, info) {
             return users.find(user => user.id === parent.commentedBy)
         },
-        post(parent, args, ctx, info){
+        post(parent, args, ctx, info) {
             return posts.find(post => post.id == parent.postId)
         }
     },
@@ -141,7 +164,7 @@ const resolvers = {
             const userFound = users.find(user => user.id === parent.authorId)
             return userFound;
         },
-        comments(parent, args, ctx, info){
+        comments(parent, args, ctx, info) {
             return comments.filter(comment => comment.postId === parent.id)
         }
     },

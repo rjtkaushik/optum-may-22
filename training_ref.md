@@ -40,6 +40,7 @@ employee {
     }
 }
 
+# npm init -y
 
 # GraphQL Basics
 - apollo-server
@@ -59,3 +60,21 @@ employee {
 
 # to run the project
 - npm run start
+
+# GraphQL Operations-
+- Queries : to fetch the data
+- Mutations : to create create, update and delete
+- Subscriptions : to get the realtime updates
+
+# Mutation (User Post Comment)
+- Create
+- Update
+- Delete
+
+> npm i uuid
+
+# Subscription
+
+# MongoDB Integration
+
+# Authentication using JWT
