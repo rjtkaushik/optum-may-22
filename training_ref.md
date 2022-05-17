@@ -220,3 +220,17 @@ mutation{
 > npm install graphql-ws ws @graphql-tools/schema apollo-server-core
 > npm install express apollo-server-express
 > npm install graphql-subscriptions
+
+- Single Endpoint - /graphql
+
+query {
+  employees(id: "") {
+    empName
+    empAddress
+  }
+}
+
+- REST API : Multiple Endpoints
+> GET - /api/employees
+> GET - /api/employees/:id
+> POST - /api/employees
