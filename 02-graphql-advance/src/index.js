@@ -4,6 +4,7 @@ const { WebSocketServer } = require("ws");
 const { useServer } = require("graphql-ws/lib/use/ws")
 const { ApolloServer } = require("apollo-server-express");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
+const { PubSub } = require("graphql-subscriptions");
 
 const db = require("./db/data");
 const typeDefs = require("./schema");
@@ -12,6 +13,7 @@ const resolvers = require("./resolvers/index");
 const app = express();
 const httpServer = createServer(app)
 const PORT = process.env.PORT || 4001
+const pubsub = new PubSub();
 
 const schema = makeExecutableSchema({ typeDefs, resolvers })
 
@@ -25,7 +27,8 @@ const wsServer = new WebSocketServer({
 useServer({
     schema, 
     context: {
-        db
+        db,
+        pubsub
     }
 }, wsServer);
 
@@ -33,7 +36,8 @@ useServer({
 const server = new ApolloServer({
     schema,
     context: {
-        db
+        db,
+        pubsub
     }
 })
 
