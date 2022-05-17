@@ -32,6 +32,16 @@ module.exports = {
            throw new Error("User not found")
        }
     },
+    updateUser(parent, args, {db}, info){
+        const {userId, data} = args;
+        const position = db.users.findIndex(user => user.id === userId)
+        if(position >= 0){
+            db.users[position] = {...db.users[position], ...data}
+            return db.users[position]
+        }else{
+            throw new Error("Unable to update")
+        }
+    },
     createPost(parent, args, {db}, info) {
         const userFound = db.users.some(user => user.id === args.data.authorId)
         if (userFound) {
