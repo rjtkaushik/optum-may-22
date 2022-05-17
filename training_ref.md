@@ -78,3 +78,103 @@ employee {
 # MongoDB Integration
 
 # Authentication using JWT
+
+
+
+# Queries
+- USER
+query {
+users {
+  id
+  name
+  email
+  age
+  posts {
+    id
+    title
+  }
+  comments {
+    id
+    text
+  }
+}
+}
+
+- POST
+query {
+  posts {
+    id
+    title
+    body
+    published
+    author {
+      name
+    }
+    comments {
+      id
+      text
+      creator {
+        name
+      }
+    }
+  }
+}
+
+- Comment
+query{
+  comments {
+    id
+    text
+    creator {
+      id
+      name
+    }
+    post{
+      id
+      title
+      author {
+        name
+      }
+    }
+  }
+}
+
+
+# Mutation
+- CreateUser
+mutation {
+  createUser(name : "sumit K", email: "sumit@test"){
+    id
+    name
+    email
+    age
+  }
+}
+
+- CreatePost
+mutation{
+  createPost(data : {
+    title : "New Title 2",
+    body:"...",
+    authorId : "102"
+    published : true
+  }){
+    id
+    title
+    body
+    published
+  }
+}
+
+- CreateComment
+mutation {
+  createComment(data : {
+    text : "My New Comment",
+    authorId : "101",
+    postId : "204"
+  }){
+    id
+    text
+  }
+}
+
