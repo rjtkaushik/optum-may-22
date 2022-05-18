@@ -298,6 +298,11 @@ mutation($deleteUserId: ID!) {
 # Run GraphQL Queries in browser
 
 # Test GraphQL Queries
+- @apollo/client (fetch API)
+- graphql
+- react
+- cross-fetch
+- jest
 
 # Deployment steps (Heroku)
 
