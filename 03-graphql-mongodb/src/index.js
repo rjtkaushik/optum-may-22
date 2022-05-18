@@ -27,13 +27,17 @@ const wsServer = new WebSocketServer({
 
 useServer({
     schema, 
-    context: { }
+    context: {}
 }, wsServer);
 
 // Apollo Server Created
 const server = new ApolloServer({
     schema,
-    context: { }
+    context: (request) => {
+        return {
+            request
+        }
+    }
 })
 
 server.start()

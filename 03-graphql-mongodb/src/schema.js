@@ -8,14 +8,13 @@ type Query {
 }
 type Mutation {
    createUser(data: CreateUserInput):User!
-   deleteUser(id: ID!) : User!
+   deleteUser: User!
    updateUser(id: ID!, data: UpdateUserInput ): User!
    createPost(data: CreatePostInput):Post!
 }
 input CreatePostInput {
    title: String!
    body: String!
-   authorId: ID!
 }
 type Post{
    _id: ID!
