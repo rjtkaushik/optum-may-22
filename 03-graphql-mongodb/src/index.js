@@ -5,6 +5,7 @@ const { useServer } = require("graphql-ws/lib/use/ws")
 const { ApolloServer } = require("apollo-server-express");
 const { makeExecutableSchema } = require("@graphql-tools/schema");
 const { PubSub } = require("graphql-subscriptions");
+const cors = require("cors");
 
 require("./db")
 
@@ -12,6 +13,8 @@ const typeDefs = require("./schema");
 const resolvers = require("./resolvers/index");
 
 const app = express();
+app.use(cors());
+
 const httpServer = createServer(app)
 const PORT = process.env.PORT || 4040
 const pubsub = new PubSub();

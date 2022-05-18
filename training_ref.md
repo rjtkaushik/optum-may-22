@@ -389,3 +389,23 @@ fragment postFields on Post{
   body
   published
 }
+
+- Delete User
+mutation{
+  deleteUser {
+    _id
+    name
+    email
+  }
+}
+
+
+# Create UI to consume GraphQL API
+- @apollo/client
+- react
+- graphql
+
+- XHR Request - REST API
+- axios - REST API
+- jQuery - REST API
+- fetch - REST API
