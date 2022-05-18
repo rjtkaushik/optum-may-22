@@ -1,10 +1,12 @@
 const UserModel = require("../model/user.model");
+const { hash } = require("bcrypt");
 
 module.exports = {
    async createUser(parent, args, ctx, info){
        const {name, email, password, age} = args.data;
        try{
-           const newUser = new UserModel({name, email, password, age})
+           const hashedPassword = await hash(password, 8)
+           const newUser = new UserModel({name, email, password : hashedPassword, age})
            const createdUser = await newUser.save()
            return {
                ...createdUser._doc
