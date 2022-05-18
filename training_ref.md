@@ -291,3 +291,101 @@ mutation($deleteUserId: ID!) {
     _id name 
   }
 }
+
+
+# Authentication (JWT)
+
+# Run GraphQL Queries in browser
+
+# Test GraphQL Queries
+
+# Deployment steps (Heroku)
+
+
+- Login Query
+query{
+  login(data: {
+    email: "alice@test",
+    password:"alice123"
+  }){
+    token,
+    user {
+      _id
+    name
+    email
+    password
+    }
+  }
+}
+
+
+- CreateUser
+mutation{
+  createUser(data : {
+    name : "alice",
+    email : "alice@test",
+    password : "alice123"
+  }){
+    _id
+    name
+    email
+    password
+  }
+}
+
+- Query Users
+query{
+  users {
+    _id
+    email
+    password
+    posts {
+     ...postFields
+    }
+  }
+}
+
+fragment postFields on Post{
+  _id
+  title
+  body
+  published
+}
+
+
+- CreatePost
+mutation{
+  createPost(data : {
+    title:"New Post 101",
+    body: "....",
+    authorId : "628489a9e053500115779e79"
+  }){
+    ...postFields
+  }
+}
+
+fragment postFields on Post{
+  _id
+  title
+  body
+  published
+}
+
+- Post Query
+query{
+  posts{
+    ...postFields,
+    author {
+      _id
+      name
+      email
+    }
+  }
+}
+
+fragment postFields on Post{
+  _id
+  title
+  body
+  published
+}

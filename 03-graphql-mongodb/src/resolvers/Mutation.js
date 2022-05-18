@@ -1,5 +1,6 @@
 const UserModel = require("../model/user.model");
 const { hash } = require("bcrypt");
+const PostModel = require("../model/post.model");
 
 module.exports = {
    async createUser(parent, args, ctx, info){
@@ -31,5 +32,22 @@ module.exports = {
        }catch(err){
            throw new Error(err)
        }
+   },
+   async createPost(parent, args, ctx, info){
+        try{
+            const { title, body, authorId} = args.data;
+            // check in DB - user does exist
+            const userFound = await UserModel.findOne({id:authorId})
+            if(userFound){
+                const newPost = new PostModel({title, body, author: authorId})
+                await UserModel.findByIdAndUpdate(authorId, {$push : {posts : newPost._doc._id}})
+                const createdPost = await newPost.save()
+                return createdPost;
+            }else{
+                throw new Error("Unable to find User")
+            }
+        }catch(err){
+            throw new Error(err)
+        }
    }
 }

@@ -1,11 +1,12 @@
 const UserModel = require("../model/user.model");
+const PostModel = require("../model/post.model");
 const { compare } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
 module.exports = {
    async users(parent, args, ctx, info){
       try{
-         const allUsers = await UserModel.find()
+         const allUsers = await UserModel.find().populate("posts")
          const duplicateUser = allUsers.map(user => {
             return {...user._doc, password : null}
          })
@@ -33,6 +34,14 @@ module.exports = {
          }else{
             throw new Error("Unable to find user")
          }
+      }catch(err){
+         throw new Error(err)
+      }
+   },
+   async posts(){
+      try{
+         const allPosts = await PostModel.find().populate("author")
+         return allPosts
       }catch(err){
          throw new Error(err)
       }

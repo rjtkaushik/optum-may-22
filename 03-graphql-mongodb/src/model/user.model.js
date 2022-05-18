@@ -13,9 +13,15 @@ const userSchema = new Schema({
         type: Schema.Types.String,
         required : true
     },
-    age : Schema.Types.Number
+    age : Schema.Types.Number,
+    posts : [{
+        type : Schema.Types.ObjectId,
+        ref : "Post"
+    }]
 })
 
 const UserModel = model("User", userSchema)
 
 module.exports = UserModel;
+
+// User -> users (Coll in DB)
