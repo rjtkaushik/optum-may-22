@@ -1003,7 +1003,7 @@ const { ApolloClient , InMemoryCache , gql  } = require("@apollo/client");
 const { CREATE_USER  } = require("../queries/Mutation");
 const { GET_USERS  } = require("../queries/Query");
 const client = new ApolloClient({
-    uri: "http://localhost:4040/graphql",
+    uri: "https://sk-optum-graphql.herokuapp.com/graphql",
     cache: new InMemoryCache()
 });
 window.onload = function() {

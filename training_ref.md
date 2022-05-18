@@ -305,6 +305,32 @@ mutation($deleteUserId: ID!) {
 - jest
 
 # Deployment steps (Heroku)
+- Make app deployable ready
+  > write the "start" script in package.json
+  > make the PORT dynamic -> process.env.PORT || 4044
+  > local MongoDB instance -> Migrate to Mongo Cloud Version (Mongo Atlas)
+- Project upload on GIT
+- create account on Heroku
+- download heroku cli -> npm run heroku -g
+- heroku commands
+  > heroku login
+  > optional step 
+    -> open Powershell 
+    -> ssh-keygen
+  > heroku keys:add
+  > heroku create sk-optum-graphql
+  > git remote
+  > git push heroku main
+
+
+
+
+
+
+
+
+
+
 
 
 - Login Query
@@ -414,3 +440,12 @@ mutation{
 - axios - REST API
 - jQuery - REST API
 - fetch - REST API
+
+
+
+- GraphQL ORM - PRISMA
+- ProgresSQL
+- ORacle
+- MySQL
+- MongoDB
+- Sqlite
